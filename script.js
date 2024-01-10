@@ -76,7 +76,7 @@ function drawLines(strokeStyle, lineWidth, step, init){
     ctx.closePath();
 }
 function numerateAxesPoints(){
-    fontSize=25;
+    fontSize=settings.pixelLenRatio[0]*0.5;
     readabilityCorrection=fontSize*0.6;
     ctx.font = fontSize+"px serif";
     ctx.fillStyle = settings.colorAxes;
@@ -246,16 +246,25 @@ function themeChange(){
     );
     toggleOptionsVisible();
 }
+function downloadGraph(){
+    let imgURL = canvas.toDataURL('image/png');
+    let anchor = document.createElement('a');
+    anchor.href=imgURL;
+    anchor.download="plot.png";
+    anchor.click();
+}
 drawGraph( new Settings("x*sin(x)", [1,1] ,[40,40]));
 
 //Populating settings Panel
 let sheetWidthDOM=document.querySelector("#w");
 let sheetHeightDOM=document.querySelector("#h");
+let precisionDOM=document.querySelector("#prec");
 let sheetColorDOM=document.querySelector("#sc");
 let axesColorDOM=document.querySelector("#ac");
 let plotColorDOM=document.querySelector("#pc");
 sheetWidthDOM.value=canvas.width;
 sheetHeightDOM.value=canvas.height;
+precisionDOM.value=settings.pixelLenRatio[0];
 sheetColorDOM.value=settings.colorGrid;
 axesColorDOM.value=settings.colorAxes;
 plotColorDOM.value=settings.colorPlot;
@@ -266,7 +275,7 @@ canvas.addEventListener('mousemove', (event)=>{
         new Settings(
             settings.equation,
             settings.units,
-            settings.pixelLenRatio,
+            [precisionDOM.value, precisionDOM.value],
             settings.zeroPoint,
             pixelXToPointX(event.clientX-canvas.getBoundingClientRect().left)
         )
