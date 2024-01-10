@@ -1,8 +1,44 @@
-<div id=drawGraph>
-    <label for=eq>f(x) =</label>
-    <input id=eq name=eq value="x*sin(x)"></input>
-    <input value=✔️ type=button onclick="drawGraphDOM()"></input>
+<div id=settings>
+    <button onclick="toggleOptionsVisible()">⚙️ Settings </button>
+    <div id=options>
+        <div>
+            <label for=w>Sheet Width :</label>
+            <input id=w name=w></input>
+        </div>
+        <div>
+            <label for=h>Sheet Height :</label>
+            <input id=h name=h></input>
+        </div>
+        <div>
+            <label for=sc>Sheet Color :</label>
+            <input id=sc name=sc></input>
+        </div>
+        <div>
+            <label for=ac>Axes Color :</label>
+            <input id=ac name=ac></input>
+        </div>
+        <div>
+            <label for=pc>Plot Color :</label>
+            <input id=pc name=pc></input>
+        </div>
+        <div>
+            <button style="width:100%" onclick="themeChange()">✔️</button>
+        </div>
+    </div>
 </div>
+<div id=panel>
+    <div id=drawGraph>
+        <label for=eq>f(x) =</label>
+        <input id=eq name=eq value="x*sin(x)"></input>
+        <input value=✔️ type=button onclick="drawGraphDOM()"></input>
+    </div>
+    <div id=evaluate>
+        <label for=ev>f(</label>
+        <input id=ev name=ev>)=</input>
+        <span id=ev-result></span>
+        <input style="float:right" value=✔️ type=button onclick="evaluateDOM()"></input>
+    </div>
+    </div>
 </div>
 <div id=scale>
     <h3>Scale</h3>
@@ -17,7 +53,7 @@
     <input style="width:100%" value=✔️ type=button onclick="reScaleDOM()"></input>
 </div>
 
-<canvas id="graph" height=400 width=400></canvas>
+<canvas id="graph"></canvas>
 <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>
 <script src=script.js></script>
 <style>
@@ -25,14 +61,14 @@
     padding:0;
     margin:0;
 }
-#drawGraph{
-    position:absolute;
+#panel{
+    position:fixed;
     bottom:8%;
     left:8%;
 }
 
 #scale{
-    position:absolute;
+    position:fixed;
     top:5%;
     right:5%;
 }
@@ -42,8 +78,25 @@
 #scale>h3{
     text-align:center;
 }
-#scale, #drawGraph{
+#scale, #panel{
     font-size:1.2em;
+    max-width:300px;
 }
-
+#settings{
+    position:fixed;
+    top:5%;
+    left:5%;
+}
+#settings>#options{
+    display:none;
+    padding:10px;
+    background-color:#eee;
+    color:black;
+}
+#settings>#options>*{
+    margin:3px;
+}
+#settings>#options>div>input{
+    float:right;
+}
 </style>
